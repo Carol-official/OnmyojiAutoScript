@@ -125,6 +125,14 @@ class Window(Handle):
         target_w, target_h = self.screenshot_size
         if (widthScreen, heightScreen) != (target_w, target_h):
             imgSrceen = cv2.resize(imgSrceen, (target_w, target_h))
+        # ===== 新增：自适应缩放至 OAS 标准分辨率 1280x720 =====
+        if widthScreen != 1280 or heightScreen != 720:
+            imgSrceen = cv2.resize(
+                imgSrceen, (1280, 720), 
+                interpolation=cv2.INTER_LANCZOS4
+            )
+            logger.debug(f'Desktop window resized from {widthScreen}x{heightScreen} to 1280x720')
+        # ===== 缩放逻辑结束 =====
         return imgSrceen
 
     @cached_property

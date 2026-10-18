@@ -129,7 +129,7 @@ class Window(Handle):
         if widthScreen != 1280 or heightScreen != 720:
             imgSrceen = cv2.resize(
                 imgSrceen, (1280, 720), 
-                interpolation=cv2.INTER_LANCZOS4
+                interpolation=cv2.INTER_CUBIC
             )
             logger.debug(f'Desktop window resized from {widthScreen}x{heightScreen} to 1280x720')
         # ===== 缩放逻辑结束 =====

@@ -1048,12 +1048,13 @@ class DesktopWindow:
                 logger.warning(f'Desktop window vanished before resize (hwnd={hwnd})')
                 return None
             client_w, client_h = size
-            logger.info(f'Desktop client size: {client_w}x{client_h} (physical), target {width}x{height}')
+            logger.debug(f'Desktop client size: {client_w}x{client_h} (physical), target {width}x{height}')
             # 多开摆位与尺寸校准解耦：客户端启动后会自行把窗口挪回屏幕中央，
             # 摆位只挂在「尺寸不对」的分支上会被尺寸已正确的窗口整份跳过
             self._desktop_assert_window_pos(hwnd)
+            return False  # 禁用自动调整窗口大小，保留用户手动拖拽的尺寸
             if client_w == width and client_h == height:
-                logger.info('Desktop client size already matches target')
+                logger.debug('Desktop client size already matches target')
                 return False
             # 用 AdjustWindowRectEx 精确计算含标题栏/边框的窗口总尺寸
             style = GetWindowLong(hwnd, GWL_STYLE)

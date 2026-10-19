@@ -1017,6 +1017,8 @@ class DesktopWindow:
         """
         if not getattr(self, 'is_desktop_window', False):
             return False
+        # 不强制调整窗口大小：保留客户端当前尺寸
+        return False
         for attempt in range(1, DESKTOP_RESIZE_ATTEMPTS + 1):
             result = self._desktop_try_set_size(width, height)
             if result is not None:
